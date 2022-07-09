@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Menu de Navegação</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css" rel="preconect" />
+</head>
+
+<body>
+    <h1 id="titulo">Seja bem-vindo (a)</h1>
+    <!-- ASIDE = CONTEÚDO NÃO RELACIONADO, PODE SER O MENU AO LADO -->
+    <aside>
+        <!-- menuToggle = FAZ UMA AÇÕA E DEPOIS VOLTA A SEU ESTADO ANTERIOR => ABRIR OU FECHAR O MENU -->
+        <div id="menu-opener" onclick="menuToggle()">
+            <img src="images/menu.png" width="36" />
+        </div>
+
+        <div id="menu-area">
+            <!--  class="menu-opened" -->
+            <ul>
+                <li>Home</li>
+                <li>Aboult</li>
+                <li> Contact</li>
+            </ul>
+
+        </div>
+    </aside>
+
+    <script src="javascript.js"></script>
+
+</body>
+
+</html>

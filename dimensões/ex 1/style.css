@@ -1,0 +1,32 @@
+.texto {
+    width: 200px;
+    height: 900px;
+    /*SE NÃO DER PARA COLOCAR O CONTEÚDO NA TELA VAI COLOCAR O SCROL(BARRA DE ROLAGEM)*/
+    overflow: auto;
+    background-color: #ccc;
+    padding: 20px;
+    border: 2px solid #FF0000;
+
+}
+
+/* SCROL OU BARRA DE ROLAGEM DA PRÓPRIA TELA => window.scrollY OU window.scrollX */
+
+/* X => HORIZONTAL */
+/* Y => VERTICAL */
+
+.scrollbutton {
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: red;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    /* PARA FICAR ACIMA DE TODO O CONTEÚDO */
+    z-index: 999;
+    /* QUANDO PASSAR O MOUSE FICAR COM A MÃOZINHA  */
+    cursor: pointer;
+    /* COMEÇAR SEM APARECER */
+    /* display: none; */
+
+}
