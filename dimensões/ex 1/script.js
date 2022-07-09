@@ -30,7 +30,7 @@ function decidirBotaoScroll() {
 
 //ADD EVENTO QUE VAI MONITORAR O SROLL DA TELA
 
-window.addEventListener('sroll', decidirBotaoScroll);
+window.addEventListener('scroll', decidirBotaoScroll);
 
 
 
