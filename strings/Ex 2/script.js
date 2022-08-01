@@ -1,0 +1,18 @@
+
+let nome = 'Bonieky Lacerda Leal';
+
+let resultado = nome.slice(-17, -10);
+
+
+
+console.log(resultado)
+
+// SLICE
+//POSIÇÃO QUE QUERO PEGAR UMA STRING
+// PEGAR UMA STRING APARTIR DE UM PONTO
+// QUANDO COLOCAR NÚMERO NEGATIVO PEGA DO FINAL PARA O INICIO - LADO DIREITO PARA A ESQUERDA
+
+// SUBSTRING =
+
+// substring
+// substr = FILTRAR STRING (MAIS INDICADO) (ACEITA POSITIVO E NEGATIVO) 
