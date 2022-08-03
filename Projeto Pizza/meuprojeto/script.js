@@ -1,3 +1,11 @@
+// CARRINHO
+let cart = [];
+// Qt = QUANTIDADE
+let modalQt = 1;
+let modalKey = 0;
+
+
+
 // el = ELEMENTO
 // A CONSTANTE ABAIXO IRÁ SUBSTITUIR O document.querySelector()
 
@@ -7,7 +15,7 @@
 // SIMPLIFICANDO
 const c = (el) => document.querySelector(el);
 
-const cs = (el) => document.querySelectorall(el);
+const cs = (el) => document.querySelectorAll(el);
 
 // LISTANDO AS PIZZAS
 pizzaJson.map((item, index) => {
@@ -37,6 +45,12 @@ pizzaJson.map((item, index) => {
         // closet = ACHE O ELEMENTO MAIS PRÓXIMO Q TENHA ...
         let key = e.target.closest('.pizza-item').getAttribute('data-key');
 
+        // RESETANDO A QUANTIDADE PARA O PADRÃO DE 1
+        modalQt = 1;
+        // ETERNIZANDO O MOMENTO DA PIZZA - SALVANDO A PIZZA SELECIONADA
+        // DIZENDO QUAL É A PIZZA
+        modalKey = key;
+
         // console.log('pizza clicada: ' + key);
         // console.log(pizzaJson[key]);
 
@@ -48,6 +62,23 @@ pizzaJson.map((item, index) => {
         document.querySelector('.pizzaInfo--desc').innerHTML = pizzaJson[key].description;
         document.querySelector('.pizzaInfo--actualPrice').innerHTML = `R$ ${pizzaJson[key].price.toFixed(2)}`;
 
+        // RETIRANDO A  SELEÇÃO DA PIZZA SELECIONADA NO MODAL
+        document.querySelector('.pizzaInfo--size.selected').classList.remove('selected');
+
+
+        // INSERINDO O PESO DAS PIZZAS - INICIO DO COMANDO
+        document.querySelectorAll('.pizzaInfo--size').forEach((size, sizeIndex) => {
+
+            // QUANDO sizeIndex FOR IGUAL A 2 ELE IRÁ SELECIONAR
+            if (sizeIndex == 2) {
+                size.classList.add('selected');
+            }
+
+            // INSERINDO O PESO DAS PIZZAS - COMANDO ESPECIFICO
+            size.querySelector('span').innerHTML = pizzaJson[key].sizes[sizeIndex];
+        });
+        // INSERINDO A QUANTIDADE 1 DE PIZZA
+        c('.pizzaInfo--qt').innerHTML = modalQt;
 
         c('.pizzaWindowArea').style.opacity = 0;
         c('.pizzaWindowArea').style.display = 'flex';
@@ -66,3 +97,106 @@ pizzaJson.map((item, index) => {
 });
 
 // VAI SELECIONAR A PIZZA Q ESTARÁ NO MODAL
+
+
+// EVENTOS (AÇÕES) DO MODAL
+
+function closeModal() {
+    c('.pizzaWindowArea').style.opacity = 0;
+    setTimeout(() => {
+        c('.pizzaWindowArea').style.display = 'none';
+    }, 500);
+}
+// INSERINDO AÇÕES NO BOTÕES DE CANCELAR E VOLTAR(MOBILE)
+document.querySelectorAll('.pizzaInfo--cancelButton, .pizzaInfo--cancelMobileButton').forEach((item) => {
+    item.addEventListener('click', closeModal);
+});
+
+// BOTOES DE QUANTIDADE
+
+c('.pizzaInfo--qtmenos').addEventListener('click', () => {
+    if (modalQt > 1) {
+        modalQt--;
+        c('.pizzaInfo--qt').innerHTML = modalQt;
+    }
+});
+
+c('.pizzaInfo--qtmais').addEventListener('click', () => {
+    modalQt++;
+    c('.pizzaInfo--qt').innerHTML = modalQt;
+});
+
+document.querySelectorAll('.pizzaInfo--size').forEach((size, sizeIndex) => {
+    size.addEventListener('click', (e) => {
+        // TIRANDO A SELEÇÃO DO ITEM
+        document.querySelector('.pizzaInfo--size.selected').classList.remove('selected');
+        // INSERINDO A SELEÇÃO NO NOVO ITEM
+        size.classList.add('selected');
+
+    });
+
+});
+
+// AÇÃO DOS BOTÕES
+
+document.querySelector('.pizzaInfo--addButton').addEventListener('click', () => {
+    // NO CARRINHO DE COMPRAS
+    // QUAL A PIZZA?
+    // console.log('Pizza: ' + modalKey);
+    // QUAL O TAMANHO?
+    // parseInt = TRANFORMA UMA string EM Nº INTEIRO
+    let size = parseInt(document.querySelector('.pizzaInfo--size.selected').getAttribute('data-key'));
+    // console.log('Tamanho: ' + size);
+    // QUANTAS PIZZAS?
+    // console.log('Quantidade: ' + modalQt);
+
+    // CRIANDO IDENTIFICADOR PARA JUNTAR O ID DA PIZZA COM O TAMANHO DELA
+    // O @ (ARROBA) ESTÁ FUNCIONANDO COMO O IDENTIFIER
+    let identifier = pizzaJson[modalKey].id + '@' + size;
+    // VERIFICANDO SE ALGUM ITEM JÁ ESTÁ NO CARRINHO
+    // QUANDO FOR UMA VERFICAÇÃO DEVO USAR DOIS IGUAIS (==)
+    // DESSA FORMA=> item.identifier == identifier (É UMA CONDIÇÃO, NAO MUDANÇA DE VALOR)
+    let key = cart.findIndex((item) => item.identifier == identifier);
+    // return item.identifier = identifier; OUTRA FORMA DE FAZER ACIMA
+
+    if (key > -1) {
+        cart[key].qt += modalQt;
+    } else {
+
+        // ADICIONANDO NO CARRINHO DE COMPRAS
+        cart.push({
+            identifier,
+            id: pizzaJson[modalKey].id,
+            size,
+            qt: modalQt
+        });
+    }
+    // ATUALIZAR O CARRINHO
+    updateCart();
+    // FECHANDO O MODAL
+    closeModal();
+
+});
+
+// ATUALIZANDO INFORMAÇÕES DO CARRINHO DE COMPRAS
+
+function updateCart() {
+    if (cart.length > 0) {
+        // show = APARECER
+        c('aside').classList.add('show');
+        // PARA MAPEAR O CARRINHO
+        for (let i in cart) {
+            // RETORNA OS ITENS DA PIZZA
+            let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id);
+            // return item.id = cart[i].id;
+
+            let cartItem = c('.models .cart--item').cloneNode(true);
+
+        }
+
+    } else {
+        // REMOVE 
+        c('aside').classList.remove('show');
+
+    }
+};
