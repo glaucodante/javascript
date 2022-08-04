@@ -181,22 +181,99 @@ document.querySelector('.pizzaInfo--addButton').addEventListener('click', () => 
 // ATUALIZANDO INFORMAÇÕES DO CARRINHO DE COMPRAS
 
 function updateCart() {
+    // CASO TENHA ITENS NO CARRINHO IRÁ MOSTRAR
     if (cart.length > 0) {
         // show = APARECER
         c('aside').classList.add('show');
+        // ZERANDO O CARRINHO
+        c('.cart').innerHTML = '';
+
+        // CALCULANDO OS PREÇOS
+
+        let subtotal = 0;
+        let desconto = 0;
+        let total = 0;
+
+
+
+
         // PARA MAPEAR O CARRINHO
         for (let i in cart) {
             // RETORNA OS ITENS DA PIZZA
             let pizzaItem = pizzaJson.find((item) => item.id == cart[i].id);
             // return item.id = cart[i].id;
 
-            let cartItem = c('.models .cart--item').cloneNode(true);
+            // CALCULANDO OS PREÇOS
+            // ( += ) VAI AUMENTAR => PREÇO VEZES O PREÇO DO ITEM DO CARRINHO
+            subtotal += pizzaItem.price * cart[i].qt;
 
+
+            let cartItem = c('.models .cart--item').cloneNode(true);
+            // PREENCHENDO O TAMANHO DA PIZZA
+            let pizzaSizeName;
+
+            switch (cart[i].size) {
+
+                case 0:
+                    pizzaSizeName = 'P';
+                    break;
+
+                case 1:
+                    pizzaSizeName = 'M';
+                    break;
+
+                case 2:
+                    pizzaSizeName = 'G';
+                    break;
+
+
+            }
+
+            // INSERINDO NO CARRINHO O TAMANHO DA PIZZA
+            let pizzaName = `${pizzaItem.name} (${pizzaSizeName})`;
+
+            cartItem.querySelector('img').src = pizzaItem.img;
+            cartItem.querySelector('.cart--item-nome').innerHTML = pizzaName;
+            cartItem.querySelector('.cart--item--qt').innerHTML = cart[i].qt;
+            cartItem.querySelector('.cart--item-qtmenos').addEventListener('click', () => {
+                if (cart[i].qt > 1) {
+                    cart[i].qt--;
+
+                } else {
+                    // RETIRANDO O ITEM DO CARRINHO
+                    cart.splice(i, 1);
+                }
+
+                updateCart();
+            });
+            cartItem.querySelector('.cart--item-qtmais').addEventListener('click', () => {
+                cart[i].qt++;
+                // IRÁ REATUALIZAR O CARRINHO E TBM FECHARÁ O CARRINHO QUANDO NAO HOUVER ITENS
+                updateCart();
+            });
+
+
+
+            // MOSTRANDO ITENS DO CARRINHO
+            c('.cart').append(cartItem);
         }
+
+        // CALCULANDO OS PREÇOS
+        desconto = subtotal * 0.1;
+        total = subtotal - desconto;
+
+        // EXIBINDO NA TELA OS VALORES
+        // last-chuld = PEGAR O ÚTIMO ITEM (DO SPAN)
+        // tofixed(2) = IRÁ FIXAR O PREÇO EM DUAS CASAS DECIMAIS
+        c('.subtotal span:last-child').innerHTML = `R$ ${subtotal.toFixed(2)}`;
+        c('.desconto span:last-child').innerHTML = `R$ ${desconto.toFixed(2)}`;
+        c('.total span:last-child').innerHTML = `R$ ${total.toFixed(2)}`;
+
+
 
     } else {
         // REMOVE 
         c('aside').classList.remove('show');
 
     }
-};
+}
