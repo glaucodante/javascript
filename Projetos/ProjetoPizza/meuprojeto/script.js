@@ -178,9 +178,25 @@ document.querySelector('.pizzaInfo--addButton').addEventListener('click', () => 
 
 });
 
+// INSERINDO AÇÕES NO BOTÃO CARRINHO MOBILE
+document.querySelector('.menu-openner').addEventListener('click', () => {
+    if (cart.length > 0) {
+        document.querySelector('aside').style.left = '0';
+    }
+});
+
+// INSERINDO O OPÇÃO DE FECHAR O CORRINHO NO MOBILE
+document.querySelector('.menu-closer').addEventListener('click', () => {
+    document.querySelector('aside').style.left = '100vw';
+});
+
 // ATUALIZANDO INFORMAÇÕES DO CARRINHO DE COMPRAS
 
 function updateCart() {
+    // INSERINDO INFORMAÇÕES NO CARRINHO VERSÃO MOBILE
+    document.querySelector('.menu-openner span').innerHTML = cart.length;
+
+
     // CASO TENHA ITENS NO CARRINHO IRÁ MOSTRAR
     if (cart.length > 0) {
         // show = APARECER
@@ -274,6 +290,8 @@ function updateCart() {
     } else {
         // REMOVE 
         c('aside').classList.remove('show');
+        // FECHANDO CARRINHO MOBILE QUANDO INSERIR A QUANTIDADE ZERO
+        c('aside').style.left = '100vw';
 
     }
 }
