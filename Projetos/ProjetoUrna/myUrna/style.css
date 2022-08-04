@@ -1,5 +1,19 @@
 /* Crinado Animação */
-@keyframes pisca body {
+@keyframes pisca {
+    0% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.2;
+    }
+}
+
+body {
     margin: 0;
     display: flex;
     justify-content: center;
@@ -106,15 +120,40 @@
     font-size: 25px;
 }
 
+/* Animação em loop infinito */
+.pisca {
+    animation-name: pisca;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
 .divisao-1-4 {
     flex: 1;
     line-height: 30px;
-
-
 }
 
 .divisao-1-right {
     width: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+
+.divisao-1-image {
+    border: 1px solid #000;
+    background-color: #FFF;
+    text-align: center;
+    font-size: 14px;
+}
+
+.divisao-1-image img {
+    width: 100%;
+}
+
+.divisao-1-image.small {
+    width: 80%;
+    font-size: 12px;
 }
 
 
@@ -123,4 +162,19 @@
     font-size: 14px;
     border-top: 2px solid #000;
     padding-left: 10px;
+}
+
+.aviso--grande {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.aviso--gigante {
+    font-size: 70px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
